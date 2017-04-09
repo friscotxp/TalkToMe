@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E191a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_0" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="TalkToMe" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="prE-ge-ovy">
+                                <rect key="frame" x="0.0" y="143" width="320" height="120"/>
+                                <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="120" id="ftf-0P-D9P"/>
+                                    <constraint firstAttribute="width" constant="320" id="wcR-3z-eUA"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES"/>
+                            </textView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="YrK-4e-0gZ" userLabel="Result Text">
+                                <rect key="frame" x="0.0" y="384" width="320" height="120"/>
+                                <color key="backgroundColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="120" id="DY4-Ua-FGY"/>
+                                    <constraint firstAttribute="width" constant="320" id="Ze7-cX-uvg"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES"/>
+                            </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Idioma Origen" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xyl-rD-Ilh">
+                                <rect key="frame" x="0.0" y="25" width="320" height="23"/>
+                                <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="320" id="g4S-r2-GTF"/>
+                                    <constraint firstAttribute="height" constant="23" id="hzF-Y3-s65"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                                <color key="shadowColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <size key="shadowOffset" width="2" height="2"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Idioma Destino" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rzu-UK-YvR">
+                                <rect key="frame" x="0.0" y="268" width="320" height="23"/>
+                                <color key="backgroundColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="23" id="V2O-Yk-Xg7"/>
+                                    <constraint firstAttribute="width" constant="320" id="sgI-1O-2VM"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                                <color key="shadowColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <size key="shadowOffset" width="2" height="2"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7xe-MP-Nm9">
+                                <rect key="frame" x="140" y="514" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="dNF-X2-8fZ"/>
+                                    <constraint firstAttribute="height" constant="40" id="fmC-5d-UcL"/>
+                                </constraints>
+                                <state key="normal" title="Start Recording!" image="record.png"/>
+                                <connections>
+                                    <action selector="recordButtonTapped" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ugn-XV-Kkw"/>
+                                </connections>
+                            </button>
+                            <pickerView contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JnQ-ET-yGR" userLabel="Picker Origen">
+                                <rect key="frame" x="0.0" y="53" width="320" height="85"/>
+                                <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="320" id="9Ga-7V-ljd"/>
+                                    <constraint firstAttribute="height" constant="85" id="kXU-pV-qi9"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="m9k-k2-qDz"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="hDf-Dz-9zW"/>
+                                </connections>
+                            </pickerView>
+                            <pickerView contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b0t-3X-KfP" userLabel="Picker Destino">
+                                <rect key="frame" x="0.0" y="296" width="320" height="83"/>
+                                <color key="backgroundColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="83" id="qcH-E2-iWS"/>
+                                    <constraint firstAttribute="width" constant="320" id="vC8-iT-Ea9"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="LmM-Eb-rQr"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="abu-TY-K2a"/>
+                                </connections>
+                            </pickerView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cRd-zh-x8l">
+                                <rect key="frame" x="262" y="523" width="42" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Hablar" image="Speak.jpg"/>
+                                <connections>
+                                    <action selector="speakText:" destination="BYZ-38-t0r" eventType="touchUpInside" id="pz4-CY-uI8"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="JnQ-ET-yGR" firstAttribute="top" secondItem="Xyl-rD-Ilh" secondAttribute="bottom" constant="5" id="7v3-SX-UH5"/>
+                            <constraint firstItem="Xyl-rD-Ilh" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="5" id="Snc-3O-ZZQ"/>
+                            <constraint firstItem="b0t-3X-KfP" firstAttribute="top" secondItem="rzu-UK-YvR" secondAttribute="bottom" constant="5" id="XiT-ze-1v9"/>
+                            <constraint firstItem="7xe-MP-Nm9" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="YI7-DD-VBV"/>
+                            <constraint firstItem="rzu-UK-YvR" firstAttribute="top" secondItem="prE-ge-ovy" secondAttribute="bottom" constant="5" id="cNt-Kx-kVh"/>
+                            <constraint firstItem="YrK-4e-0gZ" firstAttribute="top" secondItem="b0t-3X-KfP" secondAttribute="bottom" constant="5" id="iQk-DR-Eo9"/>
+                            <constraint firstItem="YrK-4e-0gZ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="k67-cs-aSk"/>
+                            <constraint firstItem="prE-ge-ovy" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="kPo-yi-esL"/>
+                            <constraint firstItem="prE-ge-ovy" firstAttribute="top" secondItem="JnQ-ET-yGR" secondAttribute="bottom" constant="5" id="ltc-rN-bXY"/>
+                            <constraint firstItem="Xyl-rD-Ilh" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="wOt-4c-fMN"/>
+                            <constraint firstItem="rzu-UK-YvR" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="yVf-tw-eGV"/>
+                            <constraint firstItem="7xe-MP-Nm9" firstAttribute="top" secondItem="YrK-4e-0gZ" secondAttribute="bottom" constant="10" id="yiI-fI-3c2"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="DestinyPicker" destination="b0t-3X-KfP" id="MfH-0H-oKF"/>
+                        <outlet property="OriginPicker" destination="JnQ-ET-yGR" id="kTc-L2-Yqk"/>
+                        <outlet property="recordButton" destination="7xe-MP-Nm9" id="WtH-Dp-x5U"/>
+                        <outlet property="speakButton" destination="cRd-zh-x8l" id="zZU-WQ-bFg"/>
+                        <outlet property="textTranslate" destination="YrK-4e-0gZ" id="bgp-yN-9fg"/>
+                        <outlet property="textView" destination="prE-ge-ovy" id="xF3-eW-DoN"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1.875" y="-3.1690140845070425"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Speak.jpg" width="40" height="40"/>
+        <image name="record.png" width="512" height="512"/>
+    </resources>
+</document>
