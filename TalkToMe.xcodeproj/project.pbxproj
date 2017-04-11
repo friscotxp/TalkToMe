@@ -9,10 +9,11 @@
 /* Begin PBXBuildFile section */
 		3267FB241E98854C003A311D /* ROGoogleTranslateParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3267FB231E98854C003A311D /* ROGoogleTranslateParams.swift */; };
 		3267FB281E988E31003A311D /* record.png in Resources */ = {isa = PBXBuildFile; fileRef = 3267FB271E988E31003A311D /* record.png */; };
-		3267FB2A1E988F8A003A311D /* 256x256bb.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3267FB291E988F8A003A311D /* 256x256bb.jpg */; };
 		3267FB2C1E98920A003A311D /* record_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 3267FB2B1E98920A003A311D /* record_red.png */; };
-		3267FB301E989CF4003A311D /* Speak.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3267FB2F1E989CF4003A311D /* Speak.jpg */; };
-		3267FB321E98A340003A311D /* Speak_green.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3267FB311E98A340003A311D /* Speak_green.jpg */; };
+		32D880851E9AAB38008FDACB /* send.png in Resources */ = {isa = PBXBuildFile; fileRef = 32D880841E9AAB38008FDACB /* send.png */; };
+		32D8808F1E9C81CE008FDACB /* background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 32D8808E1E9C81CE008FDACB /* background.jpg */; };
+		32D880911E9C8288008FDACB /* Speaker.png in Resources */ = {isa = PBXBuildFile; fileRef = 32D880901E9C8288008FDACB /* Speaker.png */; };
+		32D880931E9D5D12008FDACB /* Speaker_RED.png in Resources */ = {isa = PBXBuildFile; fileRef = 32D880921E9D5D12008FDACB /* Speaker_RED.png */; };
 		7539A4711CE7A57600505E8B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7539A4701CE7A57600505E8B /* AppDelegate.swift */; };
 		7539A4731CE7A57600505E8B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7539A4721CE7A57600505E8B /* ViewController.swift */; };
 		7539A4761CE7A57600505E8B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7539A4741CE7A57600505E8B /* Main.storyboard */; };
@@ -23,10 +24,11 @@
 /* Begin PBXFileReference section */
 		3267FB231E98854C003A311D /* ROGoogleTranslateParams.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ROGoogleTranslateParams.swift; sourceTree = "<group>"; };
 		3267FB271E988E31003A311D /* record.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = record.png; sourceTree = "<group>"; };
-		3267FB291E988F8A003A311D /* 256x256bb.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 256x256bb.jpg; sourceTree = "<group>"; };
 		3267FB2B1E98920A003A311D /* record_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = record_red.png; sourceTree = "<group>"; };
-		3267FB2F1E989CF4003A311D /* Speak.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Speak.jpg; sourceTree = "<group>"; };
-		3267FB311E98A340003A311D /* Speak_green.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Speak_green.jpg; sourceTree = "<group>"; };
+		32D880841E9AAB38008FDACB /* send.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = send.png; sourceTree = "<group>"; };
+		32D8808E1E9C81CE008FDACB /* background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background.jpg; sourceTree = "<group>"; };
+		32D880901E9C8288008FDACB /* Speaker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Speaker.png; sourceTree = "<group>"; };
+		32D880921E9D5D12008FDACB /* Speaker_RED.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Speaker_RED.png; sourceTree = "<group>"; };
 		7539A46D1CE7A57600505E8B /* TalkToMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TalkToMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7539A4701CE7A57600505E8B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7539A4721CE7A57600505E8B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -68,10 +70,11 @@
 		7539A46F1CE7A57600505E8B /* TalkToMe */ = {
 			isa = PBXGroup;
 			children = (
+				32D8808E1E9C81CE008FDACB /* background.jpg */,
+				32D880841E9AAB38008FDACB /* send.png */,
 				3267FB2B1E98920A003A311D /* record_red.png */,
-				3267FB2F1E989CF4003A311D /* Speak.jpg */,
-				3267FB311E98A340003A311D /* Speak_green.jpg */,
-				3267FB291E988F8A003A311D /* 256x256bb.jpg */,
+				32D880901E9C8288008FDACB /* Speaker.png */,
+				32D880921E9D5D12008FDACB /* Speaker_RED.png */,
 				3267FB271E988E31003A311D /* record.png */,
 				7539A4701CE7A57600505E8B /* AppDelegate.swift */,
 				7539A4721CE7A57600505E8B /* ViewController.swift */,
@@ -144,14 +147,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3267FB2A1E988F8A003A311D /* 256x256bb.jpg in Resources */,
+				32D8808F1E9C81CE008FDACB /* background.jpg in Resources */,
 				3267FB281E988E31003A311D /* record.png in Resources */,
-				3267FB321E98A340003A311D /* Speak_green.jpg in Resources */,
-				3267FB301E989CF4003A311D /* Speak.jpg in Resources */,
+				32D880851E9AAB38008FDACB /* send.png in Resources */,
 				7539A47B1CE7A57600505E8B /* LaunchScreen.storyboard in Resources */,
 				7539A4781CE7A57600505E8B /* Assets.xcassets in Resources */,
+				32D880931E9D5D12008FDACB /* Speaker_RED.png in Resources */,
 				3267FB2C1E98920A003A311D /* record_red.png in Resources */,
 				7539A4761CE7A57600505E8B /* Main.storyboard in Resources */,
+				32D880911E9C8288008FDACB /* Speaker.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -294,6 +298,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sphera.TalkToMe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -309,6 +314,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sphera.TalkToMe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

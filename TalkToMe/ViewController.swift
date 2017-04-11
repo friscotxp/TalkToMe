@@ -11,47 +11,93 @@ import Speech
 import AVFoundation
 import Intents
 
-public class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, SFSpeechRecognizerDelegate, AVSpeechSynthesizerDelegate{
-    // MARK: Properties
-    
-    //private let speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "en-US"))!
+var audioPlayer: AVAudioPlayer?
+var audioRecorder: AVAudioRecorder?
+
+public class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, SFSpeechRecognizerDelegate, AVSpeechSynthesizerDelegate, AVAudioRecorderDelegate{
+
+    // PROPERTIES CONSTANT
+    let audioSession = AVAudioSession.sharedInstance()
+
+    // PROPERTIES VARIABLES
     private var speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "es-CL"))!
     private let speechSynthesizer = AVSpeechSynthesizer();
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     private var recognitionTask: SFSpeechRecognitionTask?
     private let audioEngine = AVAudioEngine()
+    private var recording = false;
+    private var timer = Timer();
+    private var isRunning = false;
+    private var counter = 0;
+    
+    private var languageOrigen = "";
+    private var languageDestino = "";
+    private var fromLanguage = "es";
+    private var toLanguage = "en";
+    private var translation = "";
+    private var speakIndex: String.CharacterView.Index?;
+    private var speakText = false;
+    private var speakBuffer = "";
+    
+    private var rate = Float(0);
+    private var pitch = Float(0);
+    private var volume = Float(0);
+    private var sendMessage = false;
+    
+    private var enLabels = ["Play",
+                    "Send",
+                    "Configure"]
+    
+    private var esLabels = ["Reproducir",
+                    "Enviar",
+                    "Configurar"]
+    
+    private var langLabels = ["","",""];
+    
+    private var enVoices = ["Write down something.",
+                    "I'm sorry, whatsapp is not available.",
+                    "Error, please try again",
+                    "Talk enabled",
+                    "Talk disabled",
+                    "Configure",
+                    "Saved audio"]
+    
+    private var esVoices = ["Escribe una frase.",
+                    "Lo lamento Whatsapp no está disponible.",
+                    "Error, intenta otra vez.",
+                    "Hablar habilitado",
+                    "Hablar deshabilitado",
+                    "Configurar",
+                    "Audio grabado"]
+    
+    private var langVoices = ["","",""];
+    
+    private var languages = ["Arabic Maged", "Czech Zuzana", "Danish Sara", "Dutch Anna", "Greek Melina", "English Karen", "English Daniel", "English Moira", "English Samantha", "English Tessa", "Spanish Monica", "Spanish Paulina", "Finnish Satu", "French Amelie", "French Thomas", "Hebrew Carmit","Hindi Lekha", "Hungarian Mariska", "Indonesian Damayanti", "Italian Alice", "Japanese Kyoko","Korean Yuna", "Dutch Ellen", "Dutch Xander", "Norwegian Nora", "Polish Zosia", "Portuguese Luciana", "Portuguese Joana","Romanian Ioana", "Russian Milena","Slovak Laura","Swedish Alva", "Thai Kanya", "Turkish Yelda", "Chinese Ting-Ting", "Chinese Sin-Ji","Chinese Mei-Jia"]
+    
+    private var langCode = ["ar-SA","cs-CZ","da-DK","de-DE","el-GR","en-AU","en-GB","en-IE","en-US","en-ZA","es-ES","es-MX","fi-FI","fr-CA","fr-FR","he-IL","hi-IN","hu-HU","id-ID","it-IT","ja-JP","ko-KR","nl-BE","nl-NL","no-NO","pl-PL","pt-BR","pt-PT","ro-RO","ru-RU","sk-SK","sv-SE","th-TH","tr-TR","zh-CN","zh-HK","zh-TW"]
     
     @IBOutlet var textView : UITextView!
     @IBOutlet var textTranslate: UITextView!
     @IBOutlet var recordButton : UIButton!
     @IBOutlet var speakButton: UIButton!
-    
     @IBOutlet var OriginPicker: UIPickerView!
     @IBOutlet var DestinyPicker: UIPickerView!
     
-    var languages = ["Arabic Maged", "Czech Zuzana", "Danish Sara", "Dutch Anna", "Greek Melina", "English Karen", "English Daniel", "English Moira", "English Samantha", "English Tessa", "Spanish Monica", "Spanish Paulina", "Finnish Satu", "French Amelie", "French Thomas", "Hebrew Carmit","Hindi Lekha", "Hungarian Mariska", "Indonesian Damayanti", "Italian Alice", "Japanese Kyoko","Korean Yuna", "Dutch Ellen", "Dutch Xander", "Norwegian Nora", "Polish Zosia", "Portuguese Luciana", "Portuguese Joana","Romanian Ioana", "Russian Milena","Slovak Laura","Swedish Alva", "Thai Kanya", "Turkish Yelda", "Chinese Ting-Ting", "Chinese Sin-Ji","Chinese Mei-Jia"]
-    
-    var langCode = ["ar-SA","cs-CZ","da-DK","de-DE","el-GR","en-AU","en-GB","en-IE","en-US","en-ZA","es-ES","es-MX","fi-FI","fr-CA","fr-FR","he-IL","hi-IN","hu-HU","id-ID","it-IT","ja-JP","ko-KR","nl-BE","nl-NL","no-NO","pl-PL","pt-BR","pt-PT","ro-RO","ru-RU","sk-SK","sv-SE","th-TH","tr-TR","zh-CN","zh-HK","zh-TW"]
-    
-    var recording = false;
-    var timer = Timer();
-    var isRunning = false;
-    var counter = 0;
-    
-    var languageOrigen = "";
-    var languageDestino = "";
-    var fromLanguage = "es";
-    var toLanguage = "en";
-    var translation = "";
-    var speakIndex: String.CharacterView.Index?;
-    
-    var speakText = false;
-    var speakBuffer = "";
-    
-    // MARK: UIViewController
-    
     public override func viewDidLoad() {
-        super.viewDidLoad()
+        super.viewDidLoad();
+        self.audioRecordSetupMixes();
+        
+        if (rate == 0.0){
+            rate = Float(0.5);
+        }
+        
+        if (pitch == 0.0){
+            pitch = Float(1);
+        }
+        
+        if (volume == 0.0){
+            volume = Float(1);
+        }
         
         // Disable the record buttons until authorization has been granted.
         recordButton.isEnabled = false
@@ -71,7 +117,17 @@ public class ViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
             idx = langCode.index(of: languageOrigen);
             OriginPicker.selectRow(langCode.index(of: languageOrigen)!, inComponent: 0, animated: true)
         }
+        
+        if (((Locale.current as NSLocale).object(forKey: .languageCode) as? String)=="es"){
+            langVoices = esVoices
+            langLabels = esLabels
+        }else{
+            langVoices = enVoices
+            langLabels = enLabels
+        }
+        
         DestinyPicker.selectRow(langCode.index(of: "en-US")!, inComponent: 0, animated: true)
+        languageDestino = "en-US";
     }
     
     override public func viewDidAppear(_ animated: Bool) {
@@ -117,15 +173,7 @@ public class ViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         return languages[row]
     }
     
-    public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        /*speechSynthesizer.stopSpeaking(at: .immediate);
-        language = langCode[row];
-        if (fraseText.text == ""){
-            speakString(phrase:  langVoices[0]);
-        }else{
-            speakString(phrase: fraseText.text!);
-        }*/
-
+    public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int){
         languageOrigen  = langCode[OriginPicker.selectedRow(inComponent: component)];
         languageDestino = langCode[DestinyPicker.selectedRow(inComponent: component)];
         print("languageOrigen : \(languageOrigen)");
@@ -168,6 +216,8 @@ public class ViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
             
             if let result = result {
                 self.textView.text = result.bestTranscription.formattedString
+                let range = NSMakeRange(self.textView.text.characters.count - 1, 0)
+                self.textView.scrollRangeToVisible(range)
                 isFinal = result.isFinal
             }
             
@@ -211,7 +261,6 @@ public class ViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     }
     
     // MARK: Interface Builder actions
-    
     @IBAction func recordButtonTapped() {
         if audioEngine.isRunning {
             stopListener();
@@ -231,9 +280,10 @@ public class ViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     }
 
     func stopListener() {
-        audioEngine.stop()
-        recognitionRequest?.endAudio()
         stopTimer();
+        audioEngine.stop();
+        recognitionRequest?.endAudio();
+        
         //CAMBIO EL BOTON PARA INICIAR
         recordButton.isEnabled = false
         recordButton.setTitle("Stopping", for: .disabled)
@@ -244,20 +294,20 @@ public class ViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     @IBAction func speakText(_ sender: Any) {
         if !speakText{
             speakText = true;
-            speakButton.setImage(UIImage(named:"Speak_green.jpg"), for: .normal);
+            speakButton.setImage(UIImage(named:"Speaker_RED.png"), for: .normal);
             speakString(phrase: "Audio enabled");
         }else{
             speakString(phrase: "Audio disabled");
             speakText = false;
-            speakButton.setImage(UIImage(named:"Speak.jpg"), for: .normal);
+            speakButton.setImage(UIImage(named:"Speaker.png"), for: .normal);
         }
     }
     
-    //TIMER TO CONTROL VOICE INPUT 0,5 SEC
+    //TIMER TO CONTROL VOICE INPUT 1 SEC
     func runTimer() {
         print("runTimer: INICIANDO");
         isRunning = true;
-        self.timer = Timer.scheduledTimer(timeInterval: 0.5, target: self,
+        self.timer = Timer.scheduledTimer(timeInterval: 1, target: self,
                                           selector: (#selector(ViewController.updateTimer)),
                                           userInfo: nil, repeats: true);
     }
@@ -274,7 +324,7 @@ public class ViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         }else{
             if (self.textView.text.substring(from: self.speakIndex!).characters.count==0){
                 counter += 1;
-                if counter > 30 {
+                if counter > 60 {
                     stopListener();
                 }
             }else{
@@ -308,6 +358,8 @@ public class ViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
                     DispatchQueue.main.async {
                         self.textTranslate.text = "\(result)"
                         self.speakString(phrase: self.textTranslate.text);
+                        let range = NSMakeRange(self.textTranslate.text.characters.count - 1, 0)
+                        self.textTranslate.scrollRangeToVisible(range)
                         print("Traduciendo... Resultado: " + self.textTranslate.text);
                         if !(self.textView.text == "(Te escucho, habla por favor!)"){
                             self.speakIndex = self.textView.text.endIndex;
@@ -321,13 +373,77 @@ public class ViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         }
     }
     
-    //SPEAK THE STRING!!
-    var rate = Float(0.5);
-    var pitch = Float(1);
-    var volume = Float(0.75);
+    @IBOutlet var sendButton: UIButton!
+    @IBAction func sndAction(_ sender: Any) {
+        stopListener();
+        audioEngine.stop();
+        self.audioRecordSetupMixes();
+        sendMessage = true;
+        if speakText{
+            speakString(phrase: self.textTranslate.text);
+        }else{
+            speakText = true;
+            speakString(phrase: self.textTranslate.text);
+            speakText = false;
+        }
+        recordButton.isEnabled = true;
+        print("[sndAction] : " + self.textTranslate.text)
+    }
+    
+    func open(scheme: String) {
+        print("[open]")
+        if let url = URL(string: scheme) {
+            if #available(iOS 10, *) {
+                UIApplication.shared.open(url, options: [:],
+                                          completionHandler: {
+                                            (success) in
+                                            print("Open \(scheme): \(success)")
+                })
+            } else {
+                _ = UIApplication.shared.openURL(url)
+            }
+        }
+    }
+    
+    func sendAudio(){
+        print("[sendAudio]")
+        do{
+            var fileSize : UInt64 = 0;
+            let fileMgr = FileManager.default;
+            let dirPaths = fileMgr.urls(for: .documentDirectory, in: .userDomainMask)
+            let soundFileURL = dirPaths[0].appendingPathComponent("mensaje.wav")
+            let attr = try FileManager.default.attributesOfItem(atPath: soundFileURL.relativePath)
+            fileSize = attr[FileAttributeKey.size] as! UInt64
+            //fraseAudio.text = langVoices[6] + " : " + String(Int(fileSize/1024)) + " Kb.";
+            if (Int(fileSize/1024)>15){
+                let url = NSURL (string: "whatsapp://send?text=Hello%2C%20World!");
+                if UIApplication.shared.canOpenURL(url! as URL) {
+                    var controller = UIDocumentInteractionController();
+                    controller = UIDocumentInteractionController(url: soundFileURL)
+                    controller.uti = "net.whatsapp.audio"
+                    //controller.
+                    controller.delegate = self as? UIDocumentInteractionControllerDelegate
+                    //DispatchQueue.main.sync {
+                    //    self.present(self, animated: true, completion: nil)
+                    //}
+                    controller.presentOpenInMenu(from: CGRect.zero, in: self.view, animated: true)
+                }else {
+                    //print("error")
+                    sendMessage = false;
+                    speakString(phrase: langVoices[1]);
+                }
+            }else{
+                speechSynthesizer.stopSpeaking(at: .immediate);
+                speakString(phrase: langVoices[2]);
+            }
+        } catch {
+            print("Error: \(error)")
+        }
+    }
+    
     func speakString(phrase : String){
+        print("[speakString]")
         if (speakText){
-            print("Hablando: " + phrase);
             let speechUtterance = AVSpeechUtterance(string: String(describing: INSpeakableString.init(spokenPhrase: phrase)));
             speechUtterance.voice = AVSpeechSynthesisVoice(language: languageDestino);
             speechUtterance.rate = Float(rate);
@@ -338,11 +454,69 @@ public class ViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         }
     }
     
+    func audioRecordSetupMixes(){
+        let fileMgr = FileManager.default
+        let dirPaths = fileMgr.urls(for: .documentDirectory,in: .userDomainMask)
+        let soundFileURL = dirPaths[0].appendingPathComponent("mensaje.wav")
+        
+        let recordSettings =
+            [AVEncoderAudioQualityKey: AVAudioQuality.min.rawValue,
+             AVEncoderBitRateKey: 16,
+             AVNumberOfChannelsKey: 2,
+             AVSampleRateKey: 22050.0] as [String : Any]
+        //44100
+        
+        let audioSession = AVAudioSession.sharedInstance()
+        
+        do {
+            try audioSession.setCategory(AVAudioSessionCategoryPlayAndRecord);
+            try audioSession.overrideOutputAudioPort(AVAudioSessionPortOverride.speaker);
+            try audioSession.setInputGain(Float (0));
+        } catch {
+            print("Error: \(error)")
+        }
+        
+        do {
+            try audioRecorder = AVAudioRecorder(url: soundFileURL,
+                                                settings: recordSettings as [String : AnyObject])
+            audioRecorder?.delegate=self
+            audioRecorder?.prepareToRecord()
+        } catch {
+            print("Error: \(error)")
+        }
+    }
+    
+    func recordAudio() {
+        print("[recordAudio]")
+        if (audioRecorder?.isRecording) == false {
+            audioRecorder?.record();
+        }else{
+            audioRecorder?.stop();
+            audioRecorder?.prepareToRecord();
+        }
+    }
+    
+    func stopAudio() {
+        print("[stopAudio]")
+        do{
+            if audioRecorder?.isRecording == true {
+                audioRecorder?.stop()
+            } else {
+                audioPlayer?.stop()
+            }
+        }
+    }
+    
     public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didStart utterance: AVSpeechUtterance) {
+        self.recordAudio();
     }
     
     public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
+        self.stopAudio();
+        if (self.sendMessage){
+            self.sendAudio();
+        }
+        self.sendMessage = false;
     }
-    
 }
 
