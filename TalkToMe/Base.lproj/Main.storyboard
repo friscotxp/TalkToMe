@@ -133,14 +133,17 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="eKi-0D-Npt" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="1GT-w8-haj"/>
                             <constraint firstItem="JnQ-ET-yGR" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="5Xe-Lc-U0l"/>
                             <constraint firstItem="b0t-3X-KfP" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="7Tg-xu-RYI"/>
                             <constraint firstItem="JnQ-ET-yGR" firstAttribute="top" secondItem="Xyl-rD-Ilh" secondAttribute="bottom" constant="5" id="7v3-SX-UH5"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="eKi-0D-Npt" secondAttribute="bottom" id="9XC-sb-54a"/>
                             <constraint firstItem="39I-Aj-I3T" firstAttribute="leading" secondItem="7xe-MP-Nm9" secondAttribute="trailing" constant="80" id="9cw-zs-khL"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="39I-Aj-I3T" secondAttribute="bottom" constant="9" id="Ibr-n6-sRX"/>
                             <constraint firstAttribute="trailing" secondItem="eKi-0D-Npt" secondAttribute="trailing" id="LTI-3q-OZU"/>
                             <constraint firstAttribute="bottom" secondItem="eKi-0D-Npt" secondAttribute="bottom" id="RwW-H8-ZO5"/>
                             <constraint firstItem="Xyl-rD-Ilh" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="5" id="Snc-3O-ZZQ"/>
+                            <constraint firstItem="eKi-0D-Npt" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="UoG-JW-2i7"/>
                             <constraint firstItem="7xe-MP-Nm9" firstAttribute="leading" secondItem="cRd-zh-x8l" secondAttribute="trailing" constant="85" id="X6g-L5-YZC"/>
                             <constraint firstItem="b0t-3X-KfP" firstAttribute="top" secondItem="rzu-UK-YvR" secondAttribute="bottom" constant="5" id="XiT-ze-1v9"/>
                             <constraint firstItem="7xe-MP-Nm9" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="YI7-DD-VBV"/>
@@ -152,6 +155,7 @@
                             <constraint firstItem="YrK-4e-0gZ" firstAttribute="top" secondItem="b0t-3X-KfP" secondAttribute="bottom" constant="5" id="iQk-DR-Eo9"/>
                             <constraint firstItem="YrK-4e-0gZ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="k67-cs-aSk"/>
                             <constraint firstItem="prE-ge-ovy" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="kPo-yi-esL"/>
+                            <constraint firstAttribute="trailing" secondItem="eKi-0D-Npt" secondAttribute="trailing" id="kY0-g7-mvW"/>
                             <constraint firstItem="prE-ge-ovy" firstAttribute="top" secondItem="JnQ-ET-yGR" secondAttribute="bottom" constant="5" id="ltc-rN-bXY"/>
                             <constraint firstItem="39I-Aj-I3T" firstAttribute="top" secondItem="YrK-4e-0gZ" secondAttribute="bottom" constant="5" id="vcu-Na-XAS"/>
                             <constraint firstItem="Xyl-rD-Ilh" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="wOt-4c-fMN"/>
@@ -161,7 +165,9 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="DestinyLanguage" destination="rzu-UK-YvR" id="AUR-4Z-AWr"/>
                         <outlet property="DestinyPicker" destination="b0t-3X-KfP" id="MfH-0H-oKF"/>
+                        <outlet property="OriginLanguage" destination="Xyl-rD-Ilh" id="qcM-h3-Fjx"/>
                         <outlet property="OriginPicker" destination="JnQ-ET-yGR" id="kTc-L2-Yqk"/>
                         <outlet property="recordButton" destination="7xe-MP-Nm9" id="WtH-Dp-x5U"/>
                         <outlet property="sendButton" destination="39I-Aj-I3T" id="SJR-q7-Lmx"/>

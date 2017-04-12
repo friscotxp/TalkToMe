@@ -44,37 +44,23 @@ public class ViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     private var volume = Float(0);
     private var sendMessage = false;
     
-    private var enLabels = ["Play",
-                    "Send",
-                    "Configure"]
-    
-    private var esLabels = ["Reproducir",
-                    "Enviar",
-                    "Configurar"]
+    private var enLabels = ["Input Language", "Output Language"]
+    private var esLabels = ["Idioma Origen", "Idioma Destino"]
     
     private var langLabels = ["","",""];
     
-    private var enVoices = ["Write down something.",
-                    "I'm sorry, whatsapp is not available.",
-                    "Error, please try again",
-                    "Talk enabled",
-                    "Talk disabled",
-                    "Configure",
-                    "Saved audio"]
-    
-    private var esVoices = ["Escribe una frase.",
-                    "Lo lamento Whatsapp no está disponible.",
-                    "Error, intenta otra vez.",
-                    "Hablar habilitado",
-                    "Hablar deshabilitado",
-                    "Configurar",
-                    "Audio grabado"]
+    private var enVoices = ["Input Language", "Output Language"]
+    private var esVoices = ["Idioma Origen", "Idioma Destino"]
     
     private var langVoices = ["","",""];
     
-    private var languages = ["Arabic Maged", "Czech Zuzana", "Danish Sara", "Dutch Anna", "Greek Melina", "English Karen", "English Daniel", "English Moira", "English Samantha", "English Tessa", "Spanish Monica", "Spanish Paulina", "Finnish Satu", "French Amelie", "French Thomas", "Hebrew Carmit","Hindi Lekha", "Hungarian Mariska", "Indonesian Damayanti", "Italian Alice", "Japanese Kyoko","Korean Yuna", "Dutch Ellen", "Dutch Xander", "Norwegian Nora", "Polish Zosia", "Portuguese Luciana", "Portuguese Joana","Romanian Ioana", "Russian Milena","Slovak Laura","Swedish Alva", "Thai Kanya", "Turkish Yelda", "Chinese Ting-Ting", "Chinese Sin-Ji","Chinese Mei-Jia"]
+    private var languagesOrigen = ["Arabic", "Czech", "Danish", "Dutch", "Greek", "English", "Spanish", "Finnish", "French", "Hebrew", "Hungarian", "Indonesian", "Italian", "Japanese","Korean", "Norwegian", "Polish", "Portuguese", "Romanian", "Russian","Slovak","Swedish", "Thai", "Turkish", "Chinese"]
+
+    private var langCodeOrigen = ["ar-SA","cs-CZ","da-DK","de-DE","el-GR","en-US","es-ES","fi-FI","fr-FR","he-IL","hu-HU","id-ID","it-IT","ja-JP","ko-KR","no-NO","pl-PL","pt-PT","ro-RO","ru-RU","sk-SK","sv-SE","th-TH","tr-TR","zh-CN"]
     
-    private var langCode = ["ar-SA","cs-CZ","da-DK","de-DE","el-GR","en-AU","en-GB","en-IE","en-US","en-ZA","es-ES","es-MX","fi-FI","fr-CA","fr-FR","he-IL","hi-IN","hu-HU","id-ID","it-IT","ja-JP","ko-KR","nl-BE","nl-NL","no-NO","pl-PL","pt-BR","pt-PT","ro-RO","ru-RU","sk-SK","sv-SE","th-TH","tr-TR","zh-CN","zh-HK","zh-TW"]
+    private var languagesDestino = ["Arabic Maged", "Czech Zuzana", "Danish Sara", "Dutch Anna", "Greek Melina", "English Karen", "English Daniel", "English Moira", "English Samantha", "English Tessa", "Spanish Monica", "Spanish Paulina", "Finnish Satu", "French Amelie", "French Thomas", "Hebrew Carmit","Hindi Lekha", "Hungarian Mariska", "Indonesian Damayanti", "Italian Alice", "Japanese Kyoko","Korean Yuna", "Dutch Ellen", "Dutch Xander", "Norwegian Nora", "Polish Zosia", "Portuguese Luciana", "Portuguese Joana","Romanian Ioana", "Russian Milena","Slovak Laura","Swedish Alva", "Thai Kanya", "Turkish Yelda", "Chinese Ting-Ting", "Chinese Sin-Ji","Chinese Mei-Jia"]
+    
+    private var langCodeDestino = ["ar-SA","cs-CZ","da-DK","de-DE","el-GR","en-AU","en-GB","en-IE","en-US","en-ZA","es-ES","es-MX","fi-FI","fr-CA","fr-FR","he-IL","hi-IN","hu-HU","id-ID","it-IT","ja-JP","ko-KR","nl-BE","nl-NL","no-NO","pl-PL","pt-BR","pt-PT","ro-RO","ru-RU","sk-SK","sv-SE","th-TH","tr-TR","zh-CN","zh-HK","zh-TW"]
     
     @IBOutlet var textView : UITextView!
     @IBOutlet var textTranslate: UITextView!
@@ -82,6 +68,9 @@ public class ViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     @IBOutlet var speakButton: UIButton!
     @IBOutlet var OriginPicker: UIPickerView!
     @IBOutlet var DestinyPicker: UIPickerView!
+    
+    @IBOutlet var OriginLanguage: UILabel!
+    @IBOutlet var DestinyLanguage: UILabel!
     
     public override func viewDidLoad() {
         super.viewDidLoad();
@@ -108,14 +97,14 @@ public class ViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
             languageOrigen = "\(langCode!)-\(countryCode!)" // en-US on my machine
         }
         
-        var idx = langCode.index(of: languageOrigen);
+        var idx = langCodeOrigen.index(of: languageOrigen);
         if (idx != nil &&  idx!>0){
-            OriginPicker.selectRow(langCode.index(of: "en-US")!, inComponent: 0, animated: true)
+            OriginPicker.selectRow(langCodeOrigen.index(of: "en-US")!, inComponent: 0, animated: true)
         }else{
-            languages.append("Other ["+languageOrigen+"]");
-            langCode.append(languageOrigen);
-            idx = langCode.index(of: languageOrigen);
-            OriginPicker.selectRow(langCode.index(of: languageOrigen)!, inComponent: 0, animated: true)
+            languagesOrigen.append("Other ["+languageOrigen+"]");
+            langCodeOrigen.append(languageOrigen);
+            idx = langCodeOrigen.index(of: languageOrigen);
+            OriginPicker.selectRow(langCodeOrigen.index(of: languageOrigen)!, inComponent: 0, animated: true)
         }
         
         if (((Locale.current as NSLocale).object(forKey: .languageCode) as? String)=="es"){
@@ -126,8 +115,11 @@ public class ViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
             langLabels = enLabels
         }
         
-        DestinyPicker.selectRow(langCode.index(of: "en-US")!, inComponent: 0, animated: true)
+        DestinyPicker.selectRow(langCodeDestino.index(of: "en-US")!, inComponent: 0, animated: true)
         languageDestino = "en-US";
+        
+        OriginLanguage.text=langLabels[0];
+        DestinyLanguage.text=langLabels[1];
     }
     
     override public func viewDidAppear(_ animated: Bool) {
@@ -165,17 +157,30 @@ public class ViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     }
     
     public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return languages.count
+        //return languages.count
+        if OriginPicker == pickerView {
+            return languagesOrigen.count
+        }
+        if DestinyPicker == pickerView {
+            return languagesDestino.count
+        }
+        return languagesOrigen.count
     }
     
     // Delegate
     public func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return languages[row]
+        if OriginPicker == pickerView {
+            return languagesOrigen[row]
+        }
+        if DestinyPicker == pickerView {
+            return languagesDestino[row]
+        }
+        return languagesOrigen[row]
     }
     
     public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int){
-        languageOrigen  = langCode[OriginPicker.selectedRow(inComponent: component)];
-        languageDestino = langCode[DestinyPicker.selectedRow(inComponent: component)];
+        languageOrigen  = langCodeOrigen[OriginPicker.selectedRow(inComponent: component)];
+        languageDestino = langCodeDestino[DestinyPicker.selectedRow(inComponent: component)];
         print("languageOrigen : \(languageOrigen)");
         print("languageDestino : \(languageDestino)");
         
@@ -379,12 +384,15 @@ public class ViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         audioEngine.stop();
         self.audioRecordSetupMixes();
         sendMessage = true;
+        print("speakText: \(speakText)");
+        
         if speakText{
             speakString(phrase: self.textTranslate.text);
         }else{
-            speakText = true;
-            speakString(phrase: self.textTranslate.text);
-            speakText = false;
+            self.sendText();
+            //speakText = true;
+            //speakString(phrase: self.textTranslate.text);
+            //speakText = false;
         }
         recordButton.isEnabled = true;
         print("[sndAction] : " + self.textTranslate.text)
@@ -414,7 +422,6 @@ public class ViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
             let soundFileURL = dirPaths[0].appendingPathComponent("mensaje.wav")
             let attr = try FileManager.default.attributesOfItem(atPath: soundFileURL.relativePath)
             fileSize = attr[FileAttributeKey.size] as! UInt64
-            //fraseAudio.text = langVoices[6] + " : " + String(Int(fileSize/1024)) + " Kb.";
             if (Int(fileSize/1024)>15){
                 let url = NSURL (string: "whatsapp://send?text=Hello%2C%20World!");
                 if UIApplication.shared.canOpenURL(url! as URL) {
@@ -423,9 +430,6 @@ public class ViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
                     controller.uti = "net.whatsapp.audio"
                     //controller.
                     controller.delegate = self as? UIDocumentInteractionControllerDelegate
-                    //DispatchQueue.main.sync {
-                    //    self.present(self, animated: true, completion: nil)
-                    //}
                     controller.presentOpenInMenu(from: CGRect.zero, in: self.view, animated: true)
                 }else {
                     //print("error")
@@ -439,6 +443,17 @@ public class ViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         } catch {
             print("Error: \(error)")
         }
+    }
+    
+    func sendText(){
+        print("[sendAudio]")
+        let urlString = self.textTranslate.text;
+        let urlStringEncoded = urlString?.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+            let url  = NSURL(string: "whatsapp://send?text=\(urlStringEncoded!)")
+            
+            if UIApplication.shared.canOpenURL(url! as URL) {
+                 UIApplication.shared.open(url! as URL, options: [:], completionHandler: nil)
+            }
     }
     
     func speakString(phrase : String){
@@ -514,7 +529,11 @@ public class ViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
         self.stopAudio();
         if (self.sendMessage){
-            self.sendAudio();
+            if speakText{
+                self.sendAudio();
+            }else{
+                self.sendText();
+            }
         }
         self.sendMessage = false;
     }
